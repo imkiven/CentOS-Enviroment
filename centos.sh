@@ -1,4 +1,6 @@
 #！ /bin/bash
+##更新
+yum update -y
 ##关闭firewall：
 systemctl stop firewalld.service #停止firewall
 systemctl disable firewalld.service #禁止firewall开机启动
@@ -20,8 +22,6 @@ echo '# Firewall configuration written by system-config-firewall
       -A INPUT -j REJECT --reject-with icmp-host-prohibited
       -A FORWARD -j REJECT --reject-with icmp-host-prohibited
       COMMIT' > /etc/sysconfig/iptables
-##更新
-yum update -y
 #安装lrzs
 yum install lrzsz -y
 ##安装和配置apache 服务器
@@ -65,10 +65,10 @@ sed -i '1i\#chkconfig: 2345 80 90' /usr/local/tomcat/bin/startup.sh
 sed -i '/export/a\export CATALINA_BASE=/usr/local/tomcat' /usr/local/tomcat/bin/startup.sh
 sed -i '/export/a\export CATALINA_HOME=/usr/local/tomcat' /usr/local/tomcat/bin/startup.sh
 sed -i '/export/a\export CATALINA_TMPDIR=/usr/local/tomcat' /usr/local/tomcat/bin/startup.sh
-ln -s /usr/local/tomcat/bin/startup.sh /etc/rc.d/init.d/tomcat8
+ln -s /usr/local/tomcat/bin/startup.sh /etc/rc.d/init.d/tomcat
 cd /etc/rc.d/init.d/
-chmod +x tomcat-8
-chkconfig --add tomcat8
+chmod +x tomcat
+chkconfig --add tomcat
 ##执行完后，手动执行下列命令
 #修改mysql密码
 #mysql_secure_installation
