@@ -1,12 +1,12 @@
-#£¡ /bin/bash
-##¸üĞÂ
+#ï¼ /bin/bash
+##æ›´æ–°
 yum update -y
-##¹Ø±Õfirewall£º
-systemctl stop firewalld.service #Í£Ö¹firewall
-systemctl disable firewalld.service #½ûÖ¹firewall¿ª»úÆô¶¯
-##°²×°iptables·À»ğÇ½
-yum install iptables-services -y #°²×°
-#±à¼­·À»ğÇ½ÅäÖÃÎÄ¼ş
+##å…³é—­firewallï¼š
+systemctl stop firewalld.service #åœæ­¢firewall
+systemctl disable firewalld.service #ç¦æ­¢firewallå¼€æœºå¯åŠ¨
+##å®‰è£…iptablesé˜²ç«å¢™
+yum install iptables-services -y #å®‰è£…
+#ç¼–è¾‘é˜²ç«å¢™é…ç½®æ–‡ä»¶
 echo '# Firewall configuration written by system-config-firewall
       # Manual customization of this file is not recommended.
       *filter
@@ -22,43 +22,43 @@ echo '# Firewall configuration written by system-config-firewall
       -A INPUT -j REJECT --reject-with icmp-host-prohibited
       -A FORWARD -j REJECT --reject-with icmp-host-prohibited
       COMMIT' > /etc/sysconfig/iptables
-#°²×°lrzs
+#å®‰è£…lrzs
 yum install lrzsz -y
-##°²×°ºÍÅäÖÃapache ·şÎñÆ÷
-yum install httpd -y  #°²×°
-systemctl start httpd.service  #Æô¶¯apache
-systemctl enable httpd.service  #ÉèÖÃapache¿ª»úÆô¶¯
-echo "ServerSignature On  #Ìí¼Ó£¬ÔÚ´íÎóÒ³ÖĞÏÔÊ¾ApacheµÄ°æ±¾£¬OffÎª²»ÏÔÊ¾" >> /etc/httpd/conf/httpd.conf
-echo "MaxKeepAliveRequests 500  #Ìí¼ÓMaxKeepAliveRequests 500 £¨Ôö¼ÓÍ¬Ê±Á¬½ÓÊı£©" >> /etc/httpd/conf/httpd.conf
+##å®‰è£…å’Œé…ç½®apache æœåŠ¡å™¨
+yum install httpd -y  #å®‰è£…
+systemctl start httpd.service  #å¯åŠ¨apache
+systemctl enable httpd.service  #è®¾ç½®apacheå¼€æœºå¯åŠ¨
+echo "ServerSignature On  #æ·»åŠ ï¼Œåœ¨é”™è¯¯é¡µä¸­æ˜¾ç¤ºApacheçš„ç‰ˆæœ¬ï¼ŒOffä¸ºä¸æ˜¾ç¤º" >> /etc/httpd/conf/httpd.conf
+echo "MaxKeepAliveRequests 500  #æ·»åŠ MaxKeepAliveRequests 500 ï¼ˆå¢åŠ åŒæ—¶è¿æ¥æ•°ï¼‰" >> /etc/httpd/conf/httpd.conf
 sed -i 's/Options Indexes FollowSymLinks/Options Includes ExecCGI FollowSymLinks/g' /etc/httpd/conf/httpd.conf
 sed -i 's/#AddHandler cgi-script .cgi/AddHandler cgi-script .cgi/g' /etc/httpd/conf/httpd.conf
 sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/conf/httpd.conf
 sed -i 's/#Options Indexes FollowSymLinks/Options FollowSymLinks/g' /etc/httpd/conf/httpd.conf
 sed -i 's/DirectoryIndex index.html/DirectoryIndex index.html index.htm Default.html Default.htm index.php/g' /etc/httpd/conf/httpd.conf
 sed -i 's/Options Indexes FollowSymLinks/Options Includes ExecCGI FollowSymLinks/g' /etc/httpd/conf/httpd.conf
-##°²×°ºÍÅäÖÃ mysql
-yum install mariadb-server -y # °²×°mysql
-yum install mariadb-server -y # °²×°mysql
-systemctl enable mariadb.service #ÉèÖÃ mysql ¿ª»úÆô¶¯
-systemctl start mariadb.service #Æô¶¯ mysql
-cp /usr/share/mysql/my-huge.cnf /etc/my.cnf  -y #¿½±´ÅäÖÃÎÄ¼ş
-##°²×°ºÍÅäÖÃ php
-yum install php -y #°²×° php
-yum install php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-bcmath php-mhash -y #°²×°PHP×é¼ş£¬Ê¹PHPÖ§³Ö MariaDB
+##å®‰è£…å’Œé…ç½® mysql
+yum install mariadb-server -y # å®‰è£…mysql
+yum install mariadb-server -y # å®‰è£…mysql
+systemctl enable mariadb.service #è®¾ç½® mysql å¼€æœºå¯åŠ¨
+systemctl start mariadb.service #å¯åŠ¨ mysql
+cp /usr/share/mysql/my-huge.cnf /etc/my.cnf  -y #æ‹·è´é…ç½®æ–‡ä»¶
+##å®‰è£…å’Œé…ç½® php
+yum install php -y #å®‰è£… php
+yum install php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-bcmath php-mhash -y #å®‰è£…PHPç»„ä»¶ï¼Œä½¿PHPæ”¯æŒ MariaDB
 # sed -i 's/#date.timezone = PRC/date.timezone = PRC/g' /etc/php.ini
-systemctl restart mariadb.service #ÖØÆôMariaDB
-systemctl restart httpd.service #ÖØÆôapache
-##°²×°java»·¾³
+systemctl restart mariadb.service #é‡å¯MariaDB
+systemctl restart httpd.service #é‡å¯apache
+##å®‰è£…javaç¯å¢ƒ
 yum -y install java-1.7.0-openjdk*
-##°²×°nginx ·şÎñÆ÷
+##å®‰è£…nginx æœåŠ¡å™¨
 yum install nginx -y
-## °²×° tomcat
+## å®‰è£… tomcat
 cd /usr/local
 wget http://apache.fayea.com/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz
 tar -zxv -f apache-tomcat-8.0.33.tar.gz
 rm -rf apache-tomcat-8.0.33.tar.gz
 mv apache-tomcat-8.0.33 tomcat
-## tomcat ×ÔÆô¶¯
+## tomcat è‡ªå¯åŠ¨
 sed -i '1i\#processname: tomcat' /usr/local/tomcat/bin/startup.sh
 sed -i '1i\#description:tomcat auto start' /usr/local/tomcat/bin/startup.sh
 sed -i '1i\#chkconfig: 2345 80 90' /usr/local/tomcat/bin/startup.sh
@@ -69,9 +69,9 @@ ln -s /usr/local/tomcat/bin/startup.sh /etc/rc.d/init.d/tomcat
 cd /etc/rc.d/init.d/
 chmod +x tomcat
 chkconfig --add tomcat
-##Ö´ĞĞÍêºó£¬ÊÖ¶¯Ö´ĞĞÏÂÁĞÃüÁî
-#ĞŞ¸ÄmysqlÃÜÂë
+##æ‰§è¡Œå®Œåï¼Œæ‰‹åŠ¨æ‰§è¡Œä¸‹åˆ—å‘½ä»¤
+#ä¿®æ”¹mysqlå¯†ç 
 #mysql_secure_installation
-#¸³È¨ÏŞ
+#èµ‹æƒé™
 #mysql -uroot -proot123
 #grant all privileges on *.* to 'root'@'%' identified by 'root123' with grant option;
