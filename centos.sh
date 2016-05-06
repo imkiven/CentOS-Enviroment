@@ -41,11 +41,11 @@ yum install mariadb-server -y # 安装mysql
 yum install mariadb-server -y # 安装mysql
 systemctl enable mariadb.service #设置 mysql 开机启动
 systemctl start mariadb.service #启动 mysql
-cp /usr/share/mysql/my-huge.cnf /etc/my.cnf #拷贝配置文件
+cp /usr/share/mysql/my-huge.cnf /etc/my.cnf  -y #拷贝配置文件
 ##安装和配置 php
 yum install php -y #安装 php
 yum install php-mysql php-gd libjpeg* php-ldap php-odbc php-pear php-xml php-xmlrpc php-mbstring php-bcmath php-mhash -y #安装PHP组件，使PHP支持 MariaDB
-sed -i 's/#date.timezone = PRC/date.timezone = PRC/g' /etc/httpd/conf/httpd.conf
+# sed -i 's/#date.timezone = PRC/date.timezone = PRC/g' /etc/php.ini
 systemctl restart mariadb.service #重启MariaDB
 systemctl restart httpd.service #重启apache
 ##安装java环境
